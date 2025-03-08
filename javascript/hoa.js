@@ -1,30 +1,24 @@
-function createFlower() {
-    const flower = document.createElement("img");
-    flower.src = "/img/heart.png"; // Đảm bảo đường dẫn đúng
-    flower.classList.add("flower");
+document.addEventListener("DOMContentLoaded", function () {
+    function createFlower() {
+        const flower = document.createElement("div");
+        flower.innerHTML = "💯"; // Bạn có thể thay bằng hình ảnh hoa khác
+        flower.style.position = "fixed";
+        flower.style.left = Math.random() * window.innerWidth + "px";
+        flower.style.top = "-50px";
+        flower.style.fontSize = Math.random() * 10 + 20 + "px";
+        flower.style.opacity = Math.random();
+        flower.style.transition = "top 5s linear, opacity 5s";
+        document.body.appendChild(flower);
 
-    let size = Math.random() * 20 + 20; // Kích thước hoa từ 20px - 40px
-    let maxX = window.innerWidth - size; // Giới hạn X hợp lý
-    let posX = Math.random() * maxX;
+        setTimeout(() => {
+            flower.style.top = window.innerHeight + "px";
+            flower.style.opacity = "0";
+        }, 10);
 
-    flower.style.width = `${size}px`;
-    flower.style.height = `${size}px`;
-    flower.style.position = "absolute";
-    flower.style.left = `${posX}px`;
-    flower.style.top = "-50px"; // Bắt đầu từ trên màn hình
+        setTimeout(() => {
+            flower.remove();
+        }, 5000);
+    }
 
-    document.body.appendChild(flower);
-
-    gsap.to(flower, {
-        duration: Math.random() * 4 + 4, // Rơi trong khoảng 4 - 8 giây
-        y: window.innerHeight + 50,
-        x: "+=" + (Math.random() * 100 - 50), // Tạo hiệu ứng gió mạnh hơn
-        rotation: Math.random() * 180 - 90, // Xoay nhẹ tạo sự tự nhiên
-        opacity: 0,
-        ease: "power1.out",
-        onComplete: () => flower.remove(), // Xóa khỏi DOM sau khi hoàn thành
-    });
-}
-
-// Thay đổi thời gian tạo hoa để không quá đều đặn
-setInterval(createFlower, Math.random() * 500 + 800);
+    setInterval(createFlower, 500);
+});
